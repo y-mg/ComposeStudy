@@ -5,17 +5,25 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.ymg.compose.card.ui.theme.CardTheme
 
 
@@ -39,9 +47,9 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         val cardData = CardData(
-            imageUri = "https://www.gousa.or.kr/sites/default/files/styles/16_9_1280x720/public/images/hero_media_image/2016-12/lower-antelope-canyon-and-sky.jpg?h=c65aac25&itok=le2Fr6e2",
+            imageUri = "https://youimg1.tripcdn.com/target/10081f000001gqgcb2CEB.jpg?proc=source%2Ftrip",
             imageDescription = "엔텔로프 캐년",
-            author = "Dalinaum",
+            author = "y-mg",
             description = "엔텔로프 캐년은 죽기 전에 꼭 봐야할 절경으로 소개되었습니다."
         )
     }
@@ -59,8 +67,35 @@ fun CardEx(cardData: CardData) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(8.dp)
         ) {
+            AsyncImage(
+                model = cardData.imageUri,
+                contentScale = ContentScale.Crop,
+                contentDescription = cardData.imageDescription,
+                modifier = Modifier.size(32.dp)
+                    .clip(CircleShape),
+                placeholder = ColorPainter(placeHolderColor)
+            )
+            Spacer(
+                modifier = Modifier.size(8.dp)
+            )
+            Column {
+                Text(
+                    text = cardData.author
+                )
+                Spacer(
+                    modifier = Modifier.size(4.dp)
+                )
+                Text(
+                    text = cardData.description
+                )
+            }
         }
     }
+
+
+    /**
+     * Card 는 Surface 와 비슷한데 elevation 이 기본적으로 적용되어 있음
+     */
 }
 
 @Preview(showBackground = true)

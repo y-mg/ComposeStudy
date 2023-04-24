@@ -42,11 +42,16 @@ fun Greeting(name: String) {
         textDecoration = TextDecoration.Underline,
         textAlign = TextAlign.Center,
         modifier = Modifier.size(300.dp)
+        // modifier = Modifier.width(300.dp).height(300.dp)
     )
 
+
     /**
-     *  modifier = Modifier.width() 는 가로를 늘림
-     *  modifier = Modifier.size() 는 가로, 세로를 모두 늘림
+     *  modifier = Modifier.width() 는 넓이
+     *
+     *  modifier = Modifier.height() 는 높이
+     *
+     *  modifier = Modifier.size() 는 넓이, 높이 모두
      */
 }
 

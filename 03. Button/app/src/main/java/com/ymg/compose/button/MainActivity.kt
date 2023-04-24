@@ -53,15 +53,18 @@ fun ButtonExample(onButtonClicked: () -> Unit) {
         )
         Spacer(
             modifier = Modifier.size(10.dp)
-            // Modifier.size(ButtonDefaults.IconSpacing) 을 주면 기본값이 들어감
+            // modifier = Modifier.size(ButtonDefaults.IconSpacing)
         )
         Text(
             text = "Send",
         )
     }
 
+
     /**
-     * contentPadding 은 버튼 내부의 아이콘이나 텍스트가 버튼으로부터의 얼마나 떨어져 있을지 설정
+     * contentPadding 은 버튼 내부의 아이콘이나 텍스트가 버튼으로부터 얼마나 떨어져 있을지 설정
+     *
+     * ButtonDefaults.IconSpacing 는 아이콘이 차지하는 기본 공간의 크기
      */
 }
 
