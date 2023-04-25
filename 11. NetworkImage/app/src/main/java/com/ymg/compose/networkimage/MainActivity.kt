@@ -23,13 +23,15 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NetworkImageEx() {
-    /*val painter = rememberImagePainter(
+    /*
+    val painter = rememberImagePainter(
         data = "https://youimg1.tripcdn.com/target/10081f000001gqgcb2CEB.jpg?proc=source%2Ftrip"
     )
     Image(
         painter = painter,
         contentDescription = "엔텔로프 캐넌"
-    )*/
+    )
+    */
 
     Column {
         AsyncImage(

@@ -5,9 +5,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    TopBarEx("Android")
+                    TopBarEx()
                 }
             }
         }
@@ -31,9 +39,92 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun TopBarEx(name: String) {
+fun TopBarEx() {
     Column {
-        Text(text = "Hello $name!")
+        TopAppBar(
+            title = {
+                Text(text = "TopAppBar")
+            },
+            navigationIcon = {
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "Up Navigation"
+                    )
+                }
+            },
+            actions = {
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "검색"
+                    )
+                }
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
+                        contentDescription = "설정"
+                    )
+                }
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.AccountBox,
+                        contentDescription = "계정"
+                    )
+                }
+            }
+        )
+        TopAppBar {
+            IconButton(
+                onClick = {}
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Up Navigation"
+                )
+            }
+            Text(
+                text = "TopAppBar",
+                modifier = Modifier.weight(1f)
+            )
+            IconButton(
+                onClick = {}
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "검색"
+                )
+            }
+            IconButton(
+                onClick = {}
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Settings,
+                    contentDescription = "설정"
+                )
+            }
+            IconButton(
+                onClick = {}
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.AccountBox,
+                    contentDescription = "계정"
+                )
+            }
+        }
+
+
+        /**
+         * TopAppBar 는 지정된 스타일이 있는 형태과 자유롭게 스타일을 지정할 수 있는 형태 2가지가 존재
+         */
     }
 }
 
@@ -41,6 +132,6 @@ fun TopBarEx(name: String) {
 @Composable
 fun DefaultPreview() {
     TopAppBarTheme {
-        TopBarEx("Android")
+        TopBarEx()
     }
 }

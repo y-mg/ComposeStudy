@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme
@@ -37,9 +38,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun SlotEx() {
     val checked1 = remember { mutableStateOf(false) }
-    val checked2 = remember { mutableStateOf(false) }
+    var checked2 by remember { mutableStateOf(false) }
 
     Column {
+        /*
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = checked1.value,
@@ -50,7 +52,6 @@ fun SlotEx() {
                 modifier = Modifier.clickable { checked1.value = !checked1.value }
             )
         }
-
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = checked2.value,
@@ -61,6 +62,65 @@ fun SlotEx() {
                 modifier = Modifier.clickable { checked2.value = !checked2.value }
             )
         }
+        */
+        CheckboxWithSlotApi(
+            checked = checked1
+        ) {
+            Text(text = "텍스트 1")
+        }
+        CheckboxWithSlotApi(
+            checked = checked2,
+            onCheckedChanged = {
+                checked2 = !checked2
+            }
+        ) {
+            Text(text = "텍스트 2")
+        }
+    }
+}
+
+@Composable
+fun CheckboxWithSlotApi(
+    checked: MutableState<Boolean>,
+    content: @Composable RowScope.() -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable {
+            checked.value = !checked.value
+        }
+    ) {
+        Checkbox(
+            checked = checked.value,
+            onCheckedChange = { checked.value = it }
+        )
+        content()
+    }
+
+
+    /**
+     * 컴포저블 함수가 다른 컴포저블 함수나 컴포넌트를 포함할 수 있게 하는 것을 Slot API 라고 하며,
+     * 코드로는 앞에 @Composable 를 붙여주는 것을 말함 (여기서는 content 에 해당)
+     */
+}
+
+@Composable
+fun CheckboxWithSlotApi(
+    checked: Boolean,
+    onCheckedChanged: () -> Unit,
+    content: @Composable RowScope.() -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable {
+            onCheckedChanged()
+        }
+    ) {
+        Checkbox(
+            checked = checked,
+            onCheckedChange = { onCheckedChanged() }
+        )
+        content()
     }
 }
 
