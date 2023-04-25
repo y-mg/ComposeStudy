@@ -62,7 +62,7 @@ private fun Inner(modifier: Modifier = Modifier) {
 
 
     /**
-     * BoxWithConstraints 는 자주 사용되지는 않지만 크기의 조건에 따라 무언가를 추가할 때 사용됨
+     * BoxWithConstraints 는 자주 사용되지는 않지만 컴포넌트의 크기와 같은 조건에 따라 무언가를 처리할 때 사용됨
      */
 }
 
