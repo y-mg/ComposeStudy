@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,28 +37,64 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ConstraintLayoutEx() {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+        val (redBox, magentaBox, greenBox, yelloBox) = createRefs()
+
         Box(
             modifier = Modifier
                 .size(40.dp)
                 .background(Color.Red)
+                .constrainAs(redBox) {
+                    // 우하단
+                    bottom.linkTo(anchor = parent.bottom, margin = 8.dp)
+                    end.linkTo(anchor = parent.end, margin = 4.dp)
+                }
         )
         Box(
             modifier = Modifier
                 .size(40.dp)
                 .background(Color.Magenta)
+                .constrainAs(magentaBox) {
+                    // 상단 중앙
+                    start.linkTo(anchor = parent.start)
+                    end.linkTo(anchor = parent.end)
+                }
         )
         Box(
             modifier = Modifier
                 .size(40.dp)
                 .background(Color.Green)
+                .constrainAs(greenBox) {
+                    // 정중앙
+                    /*
+                    start.linkTo(anchor = parent.start)
+                    end.linkTo(anchor = parent.end)
+                    top.linkTo(anchor = parent.top)
+                    bottom.linkTo(anchor = parent.bottom)
+                    */
+                    /*
+                    centerVerticallyTo(parent)
+                    centerHorizontallyTo(parent)
+                    */
+                    centerTo(parent)
+                }
         )
 
         Box(
             modifier = Modifier
                 .size(40.dp)
                 .background(Color.Yellow)
+                .constrainAs(yelloBox) {
+                    // magentaBox 의 우하단
+                    start.linkTo(anchor = magentaBox.end)
+                    top.linkTo(anchor = magentaBox.bottom)
+                }
         )
     }
+
+
+    /**
+     * constrainAs() 는 뷰의 위치를 렌더링 해주는 Modifier
+     */
 }
 
 @Preview(showBackground = true)
