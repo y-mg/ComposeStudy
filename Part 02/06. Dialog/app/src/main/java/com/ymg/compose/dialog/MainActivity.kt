@@ -34,7 +34,7 @@ fun DialogEx() {
     var counter by remember { mutableStateOf(0) }
 
     Column {
-        Button(onClick = { openDialog = !openDialog }) {
+        Button(onClick = { openDialog = true }) {
             Text("다이얼로그 열기")
         }
         Text("카운터: $counter")
@@ -43,20 +43,30 @@ fun DialogEx() {
     if (openDialog) {
         AlertDialog(
             onDismissRequest = {
-
+                openDialog = false
             },
             confirmButton = {
-
+                Button(onClick = {
+                    counter++
+                    openDialog = false
+                }) {
+                    Text("더하기")
+                }
             },
             dismissButton = {
-
+                Button(onClick = {
+                    openDialog = false
+                }) {
+                    Text("취소")
+                }
             },
             title = {
-
+                Text("더하기")
             },
             text = {
-
-        })
+                Text("더하기 버튼을 누르면 카운터가 증가됨")
+            }
+        )
     }
 }
 

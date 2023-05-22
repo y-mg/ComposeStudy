@@ -3,15 +3,18 @@ package com.ymg.compose.customdialog
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.ymg.compose.customdialog.ui.theme.CustomDialogTheme
 
@@ -49,11 +52,44 @@ fun CustomDialog() {
     if (openDialog) {
         Dialog(
             onDismissRequest = {
-
+                openDialog = false
             }
         ) {
             Surface {
-
+                Column(
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Text("버튼을 클릭해주세요.\n-> +1 을 누르면 값이 증가됩니다.\n-> -1을 누르면 값이 감소합니다.")
+                    Spacer(modifier = Modifier.size(10.dp))
+                    Row(
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    ) {
+                        Button(
+                            onClick = {
+                                openDialog = false
+                            }
+                        ) {
+                            Text("취소")
+                        }
+                        Button(
+                            onClick = {
+                                counter++
+                                openDialog = false
+                            },
+                            modifier = Modifier.padding(start = 5.dp, end = 5.dp)
+                        ) {
+                            Text("+1")
+                        }
+                        Button(
+                            onClick = {
+                                counter--
+                                openDialog = false
+                            }
+                        ) {
+                            Text("-1")
+                        }
+                    }
+                }
             }
         }
     }
