@@ -3,6 +3,8 @@ package com.ymg.compose.animation01
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.*
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +18,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,13 +46,35 @@ fun AnimationEx() {
     var helloWorldVisible by remember { mutableStateOf(true) }
     var isRed by remember { mutableStateOf(false) }
 
-    val backgroundColor = Color.LightGray
+    val backgroundColor by animateColorAsState(
+        targetValue = if (isRed) {
+            Color.Red
+        } else {
+            Color.White
+        }
+    )
+
+    val alpha by animateFloatAsState(
+        targetValue = if (isRed) {
+            1.0f
+        } else {
+            0.5f
+        }
+    )
 
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .padding(16.dp)
             .background(backgroundColor)
+            .alpha(alpha)
     ) {
-        Text(text = "Hello World!")
+        AnimatedVisibility(
+            visible = helloWorldVisible,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        ) {
+            Text(text = "Hello World!")
+        }
 
         Row(
             Modifier.selectable(
