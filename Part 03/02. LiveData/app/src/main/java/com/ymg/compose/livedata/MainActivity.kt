@@ -9,11 +9,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ymg.compose.livedata.ui.theme.LiveDataTheme
 
@@ -33,35 +33,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-class ToDoViewModel : ViewModel() {
-    val text = mutableStateOf("")
-
-    val toDoList = mutableStateListOf<ToDoData>()
-
-    val onSubmit: (String) -> Unit = {
-        val key = (toDoList.lastOrNull()?.key ?: 0) + 1
-        toDoList.add(ToDoData(key, it))
-        text.value = ""
-    }
-
-    val onEdit: (Int, String) -> Unit = { key, newText ->
-        val i = toDoList.indexOfFirst { it.key == key }
-        toDoList[i] = toDoList[i].copy(text = newText)
-    }
-
-    val onToggle: (Int, Boolean) -> Unit = { key, checked ->
-        val i = toDoList.indexOfFirst { it.key == key }
-        toDoList[i] = toDoList[i].copy(done = checked)
-    }
-
-    val onDelete: (Int) -> Unit = { key ->
-        val i = toDoList.indexOfFirst { it.key == key }
-        toDoList.removeAt(i)
-    }
-}
-
 @Composable
-fun TopLevel(viewModel: ToDoViewModel = viewModel()) {
+fun TopLevel(
+    viewModel: ToDoViewModel = viewModel()
+) {
     Scaffold {
         Column(
             modifier = Modifier
@@ -69,13 +44,15 @@ fun TopLevel(viewModel: ToDoViewModel = viewModel()) {
                 .padding(paddingValues = it)
         ) {
             ToDoInput(
-                text = viewModel.text.value, onTextChange = {
-                    viewModel.text.value = it
-                }, onSubmit = viewModel.onSubmit
+                text = viewModel.text.observeAsState("").value,
+                onTextChange = viewModel.setText,
+                onSubmit = viewModel.onSubmit
             )
+
+            val items = viewModel.toDoList.observeAsState(emptyList()).value
             LazyColumn {
                 items(
-                    items = viewModel.toDoList,
+                    items = items,
                     key = { it.key }
                 ) { toDoData ->
                     ToDo(
@@ -189,7 +166,3 @@ fun ToDoPreview() {
         ToDo(ToDoData(1, "nice", true))
     }
 }
-
-data class ToDoData(
-    val key: Int, val text: String, val done: Boolean = false
-)

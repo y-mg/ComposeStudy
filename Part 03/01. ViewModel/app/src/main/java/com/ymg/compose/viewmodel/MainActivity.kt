@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ymg.compose.viewmodel.ui.theme.ViewModelTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 class MainActivity : ComponentActivity() {
@@ -33,31 +34,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun TopLevel() {
-    val (text, setText) = remember { mutableStateOf("") }
-    val toDoList = remember { mutableStateListOf<ToDoData>() }
-
-    val onSubmit: (String) -> Unit = {
-        val key = (toDoList.lastOrNull()?.key ?: 0) + 1
-        toDoList.add(ToDoData(key, it))
-        setText("")
-    }
-
-    val onEdit: (Int, String) -> Unit = { key, newText ->
-        val i = toDoList.indexOfFirst { it.key == key }
-        toDoList[i] = toDoList[i].copy(text = newText)
-    }
-
-    val onToggle: (Int, Boolean) -> Unit = { key, checked ->
-        val i = toDoList.indexOfFirst { it.key == key }
-        toDoList[i] = toDoList[i].copy(done = checked)
-    }
-
-    val onDelete: (Int) -> Unit = { key ->
-        val i = toDoList.indexOfFirst { it.key == key }
-        toDoList.removeAt(i)
-    }
-
+fun TopLevel(
+    viewModel: TodoViewModel = viewModel()
+) {
     Scaffold {
         Column(
             modifier = Modifier
@@ -65,20 +44,22 @@ fun TopLevel() {
                 .padding(paddingValues = it)
         ) {
             ToDoInput(
-                text = text,
-                onTextChange = setText,
-                onSubmit = onSubmit
+                text = viewModel.text.value,
+                onTextChange = {
+                    viewModel.text.value = it
+                },
+                onSubmit = viewModel.onSubmit
             )
             LazyColumn {
                 items(
-                    items = toDoList,
+                    items = viewModel.toDoList,
                     key = { it.key }
                 ) { toDoData ->
                     ToDo(
                         toDoData = toDoData,
-                        onEdit = onEdit,
-                        onToggle = onToggle,
-                        onDelete = onDelete
+                        onEdit = viewModel.onEdit,
+                        onToggle = viewModel.onToggle,
+                        onDelete = viewModel.onDelete
                     )
                 }
             }
@@ -200,9 +181,3 @@ fun ToDoPreview() {
         ToDo(ToDoData(1, "nice", true))
     }
 }
-
-data class ToDoData(
-    val key: Int,
-    val text: String,
-    val done: Boolean = false
-)
