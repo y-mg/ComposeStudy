@@ -48,12 +48,16 @@ class PokemonViewModel @Inject constructor(
                         } else {
                             pokeAPI.getPokemons()
                         }
-                        // 단계 2: `offset=20&limit=20` 형태의 주소에서
-                        // `prevKey`와 `nextKey`를 만들어 전달하자.
+
+                        // offset=20&limit=20
                         return LoadResult.Page(
                             data = pokemons.results,
-                            prevKey = null,
-                            nextKey = null
+                            prevKey = pokemons.previous?.substringAfter("offset=")
+                                ?.substringBefore("&")
+                                ?.toInt(),
+                            nextKey = pokemons.next?.substringAfter("offset=")
+                                ?.substringBefore("&")
+                                ?.toInt()
                         )
                     } catch (e: Exception) {
                         Log.e("EEE", "error: $e")

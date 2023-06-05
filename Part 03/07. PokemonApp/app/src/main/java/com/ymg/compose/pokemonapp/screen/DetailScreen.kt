@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.ymg.compose.pokemonapp.viewmodel.PokemonViewModel
 
@@ -18,7 +19,7 @@ import com.ymg.compose.pokemonapp.viewmodel.PokemonViewModel
 fun DetailScreen(
     pokemonId: Int,
     onUpButtonClick: () -> Unit,
-    viewModel: PokemonViewModel
+    viewModel: PokemonViewModel = hiltViewModel()
 ) {
     viewModel.getPokemon(pokemonId)
 

@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -15,8 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.ymg.compose.di.ui.theme.DITheme
 import com.ymg.compose.di.viewmodel.GithubViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +46,9 @@ fun ReposScreen(viewModel: GithubViewModel = viewModel()) {
                 Text("리포지토리 가져오기")
             }
         }
-        /*items(viewModel.repos) {
+        items(viewModel.repos) {
             Text(it.name)
-        }*/
+        }
     }
 }
 

@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.ymg.compose.pokemonapp.viewmodel.PokemonViewModel
@@ -18,7 +19,7 @@ import com.ymg.compose.pokemonapp.viewmodel.PokemonViewModel
 @Composable
 fun MainScreen(
     onPokemonClick: (String) -> Unit,
-    viewModel: PokemonViewModel
+    viewModel: PokemonViewModel = hiltViewModel()
 ) {
     val items = viewModel.pokemonList.collectAsLazyPagingItems()
     LazyColumn {

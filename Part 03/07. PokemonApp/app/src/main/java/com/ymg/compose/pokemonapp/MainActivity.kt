@@ -9,9 +9,11 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.ymg.compose.pokemonapp.screen.DetailScreen
 import com.ymg.compose.pokemonapp.screen.MainScreen
 import com.ymg.compose.pokemonapp.ui.theme.PokemonAppTheme
@@ -46,7 +48,7 @@ fun TopLevel(
         "Home",
         modifier = modifier
     ) {
-        /*composable("Home") {
+        composable("Home") {
             MainScreen(
                 onPokemonClick = {
                     val pokemonId = it.substringAfter("pokemon/")
@@ -59,8 +61,13 @@ fun TopLevel(
 
         composable(
             "Detail/{pokemonId}",
+            arguments = listOf(
+                navArgument("pokemonId") {
+                    type = NavType.IntType
+                }
+            ),
         ) {
-            val pokemonId = 0
+            val pokemonId = it.arguments?.getInt("pokemonId") as Int
             DetailScreen(
                 pokemonId = pokemonId,
                 onUpButtonClick = {
@@ -71,6 +78,6 @@ fun TopLevel(
                     }
                 }
             )
-        }*/
+        }
     }
 }
